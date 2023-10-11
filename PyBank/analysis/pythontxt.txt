@@ -1,9 +1,7 @@
 ================
 Total Months :  86
-Net Total : $22564198
-Average Change : $37171662.47674418
-GREATEST INCREASE : 17-Feb ($9)
-GREATEST DECREASE : 17-Feb ($2)
-Net Money Gained : $37343515
-Net Money Lossed : $-14779317
+Net Total : $22564198.0
+Average Change : $262374
+GREATEST INCREASE : Mar-13 ($1141840.0)
+GREATEST DECREASE : Dec-10 ($-1194133.0)
 ================
