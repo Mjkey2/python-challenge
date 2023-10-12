@@ -7,82 +7,75 @@ import csv
 #derive data set from election_data.csv
 csvpath = os.path.join('Resources', 'election_data.csv')
 
-
-
-
-#create a script that analyzes and calculates the following:
+file_to_load = os.path.join("Resources", "election_data.csv")
+file_to_output = os.path.join("analysis", "election_analysis.txt")
 
 #Dictionary for candidates and their keys as vote count values
-Candidates = {'Charles': 0, 
-              'Diana': 0, 
-              'Raymon': 0,
-              }
+total_votes = 0
 
+#variables for  candidates and their vote counts
+candidates = []
+candidate_votes = {}
 
-with open(csvpath,encoding='UTF-8') as csvfile:
-    csvreader = csv.reader(csvfile, delimiter=",")
+#winning conditions
+winning_candidate = ""
+winning_count = 0
+
+#read csv and convert to dictionaries
+with open(file_to_load) as election_data:
+    csvreader = csv.reader(election_data)
     header = next(csvreader)
 
-#create these three variables
-    #voter ID
-    voter_idvar = []
-    #county
-    countyvar = []
-    #candidate
-    candidatevar = []
-    candidateTOTAL = []
-    #run through the datasheet and if charles has a vote per row add +1 to charles if not diana elif Raymon
-    candidatevar.append(row[2])
-    Candidates.len(candidatevar)
-    
-    #count number of instances for candidates
-    #for row in csvreader:
-        #if row[2].count("Charles"):
-            #Candidates['Charles'] + 1
+    #for each row
+    for row in csvreader:
 
-    Candidates['Charles'] + 1
-    print(Candidates['Charles'])
-#calculate the percentages. Sum all three and then find the percentages for the three
+        #every row add one to total votes
+        total_votes += 1
 
+        #extract candidate from each row
+        candidate = row[2]
 
-#The total number of votes cast
-#count_votes.append(row[0])
-#sumvotes = len(count_votes)
+        #If candidate in row is NOT IN THE DICTIONARY
+        if candidate not in candidates:
+            #ADD THEM
+            candidates.append(candidate)
+            #AND TRACK THEIR COUNT
+            candidate_votes[candidate] = 0
+        #add vote to the candidates count
+        candidate_votes[candidate] = candidate_votes[candidate] + 1
 
-    #A complete list of candidates who received votes
+# Print the results and export the data to our text file
+with open(file_to_output, "w") as txt_file:
+   
+    #determine winner
+    for candidate in candidate_votes:
+    #vote count and percentages
+        votes = candidate_votes.get(candidate)
+        vote_percentage = float(votes) / float(total_votes) * 100
 
-    #The percentage of votes each candidate won
+        #winning vote count and candidate
+        if (votes > winning_count):
+            winning_count = votes
+            winning_candidate = candidate
 
-    #The total number of votes each candidate won
+    #create final vote count and winner results
+        voter_output = f"{candidate}: {vote_percentage:.3f}% ({votes})\n"
+        print(voter_output, end="")
+        # Save each candidate's voter count and percentage to text file
+        txt_file.write(voter_output)
 
-    #The winner of the election based on popular vote
-        
-###Analysis should align with the following results
-    #Election Results
-    
-    #Total Votes: 369711
-  
-    #Charles Casper Stockham: 23.049% (85213)
-    #Diana DeGette: 73.812% (272892)
-    #Raymon Anthony Doane: 3.139% (11606)
+    winoutput = "================\n"
+    winoutput += "ELECTION RESULTS\n"
+    winoutput += f"-------------------------\n"
+    winoutput += f"Total Votes: {total_votes}\n"
+    winoutput += f"-------------------------\n"
+    winoutput += f"Winner: {winning_candidate}\n"
+    winoutput += "================\n"
+ 
+  # Save the final vote count to the text file
+    txt_file.write(winoutput)
 
-    #Winner: Diana DeGette
-
-#the final script should both print the analysis to the terminal and export a TEXT FILE with the results
-
-
-#output = "================\n"
-#output += "Election Results\n"
-#output += "----------------\n"
-#output += f"Total Votes: {votetotal}\n"
-#output += "----------------\n"
-#output += f"{Charles alphabetical order} \\\PERCENT AND TOTAL COUNT \n"
-#output += f"{Diana alphabetical order} \\\PERCENT AND TOTAL COUNT \n"
-#output += f"{Raymon alphabetical order} \\\PERCENT AND TOTAL COUNT \n"
-#output += "----------------\n"
-#output += "Winner :" + winner \n"
-#output += "================"
-
-#print(output)
-#with open("./analysis/pythonpolltxt.txt", "w") as txtfile:
-    #txtfile.write(output)
+#print results
+print(winoutput)
+with open("./analysis/pythontxt.txt", "w") as txtfile:
+    txtfile.write(winoutput)
