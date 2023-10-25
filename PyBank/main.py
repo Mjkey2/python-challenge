@@ -21,7 +21,7 @@ import os
 #module for reading csv files
 import csv
 
-csvpath = os.path.join('Resources', 'budget_data.csv')
+csvpath = os.path.join("Resources", "budget_data.csv")
 
 #variables
 total_months = [] # create variable to store total motnhs
